@@ -16,6 +16,7 @@ import pprint
 START_CHAR = '~'
 PUNCTUATION = ['.','?','!']
 END_PUNCTUATION = PUNCTUATION
+FORBIDDEN = ['(',')','[',']','"','=','-']
 
 def markov_model(text, k):
     """
@@ -32,12 +33,9 @@ def markov_model(text, k):
         return None
 
     # preprocess the string
-    text = text.replace('(', '')
-    text = text.replace(')', '')
-    text = text.replace('"', '')
-    text = text.replace('[', '')
-    text = text.replace(']', '')
-    text = text.replace(START_CHAR, '')
+    for char in FORBIDDEN:
+        text = text.replace(char, ' ')
+    text = text.replace(START_CHAR, ' ')
 
     # initialize model and prepare textlist
     split_text = text.split()
